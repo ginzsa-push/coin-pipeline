@@ -86,6 +86,30 @@ x-airflow-common:
       condition: service_healthy
 
 services:
+  coindb:
+    image: postgres:13.22-trixie
+    container_name: coin_postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: coin_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  alembic:
+    build: ./store
+    container_name: alembic_service
+    depends_on:
+      - coindb
+    volumes:
+      - ./store:/alembic   # mount local alembic project
+    environment:
+      DATABASE_URL: postgresql+psycopg2://user:password@coindb:5432/coin_db
+    command: ["./entrypoint.sh"]
+
+
   postgres:
     image: postgres:13
     environment:
@@ -331,5 +355,7 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
+
 volumes:
   postgres-db-volume:
+  pgdata:
