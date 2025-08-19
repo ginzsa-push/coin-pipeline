@@ -109,6 +109,17 @@ services:
       DATABASE_URL: postgresql+psycopg2://user:password@coindb:5432/coin_db
     command: ["./entrypoint.sh"]
 
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: fastapi_service
+    depends_on:
+      - coindb
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://user:password@coindb:5432/coin_db
 
   postgres:
     image: postgres:13
