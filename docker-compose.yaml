@@ -86,40 +86,45 @@ x-airflow-common:
       condition: service_healthy
 
 services:
-  coindb:
+  coin_postgres_db:
     image: postgres:13.22-trixie
     container_name: coin_postgres_db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: coin_db
+      POSTGRES_DB: coindatabase
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
   
   alembic:
     build: ./store
     container_name: alembic_service
     depends_on:
-      - coindb
+      - coin_postgres_db
     volumes:
       - ./store:/alembic   # mount local alembic project
     environment:
-      DATABASE_URL: postgresql+psycopg2://user:password@coindb:5432/coin_db
+      DATABASE_URL: postgresql+psycopg2://user:password@coin_postgres_db:5433/coindatabase
     command: ["./entrypoint.sh"]
 
-  web:
+  fastapi:
     build:
       context: ./web
-      dockerfile: Dockerfile
     container_name: fastapi_service
     depends_on:
-      - coindb
+      - coin_postgres_db
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+psycopg2://user:password@coindb:5432/coin_db
+      DATABASE_URL: postgresql+psycopg2://user:password@coin_postgres_db:5433/coindatabase
 
   postgres:
     image: postgres:13

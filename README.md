@@ -54,10 +54,14 @@ this should be used on the web api and airflow dags
 
 ## test locally (not working atm - conflict with airflow dbs)
 ```
+docker compose build
 docker compose up
 ```
 
-
+Tear down local run (remove volume)
+```
+docker-compose down -v 
+```
 
 ## Issues (so far)
 
