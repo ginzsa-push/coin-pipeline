@@ -36,6 +36,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Uses alembic [https://alembic.sqlalchemy.org/en/latest/tutorial.html] 
 
+Note: There are some 're arrengments' to do the first 'initial' run locally using UV
+This will run Generate the first scheleton for alembic execution.
+Note: for that it has the alembic.ini should be change to: localhost:5433
+```
+uv run alembic upgrade head
+uv run alembic revision -m "create initial table creation"
+```
+
 # How to test
 
 ## integration test needs environment variables add exchange api token
