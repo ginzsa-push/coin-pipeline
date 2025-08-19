@@ -1,0 +1,13 @@
+{
+    "success": true,
+    "terms": "https://currencylayer.com/terms",
+    "privacy": "https://currencylayer.com/privacy",
+    "timestamp": 1755262145,
+    "source": "USD",
+    "quotes": {
+        "USDGBP": 0.737385,
+        "USDCAD": 1.37905,
+        "USDJPY": 146.913014,
+        "USDMXN": 18.730601
+    }
+}

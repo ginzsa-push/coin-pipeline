@@ -1,6 +1,23 @@
 # coin-pipeline
 
-This is a mock pipeline airflow project (Not to be used on production environment)
+NOTE: This is a mock pipeline airflow project (Not to be used on production environment)
+
+This uses CoinMarketCap API (Free access) for cripto tokens (coins)
+https://coinmarketcap.com/api/documentation/v1/
+
+And Exchange Rate for fiat 
+https://api.exchangerate.host/live?access_key=myapikey
+
+The ETL exersice will step through the followint
+
+    1. extract data from boths apis
+    2. transform aggregate and derive data into parquet file
+    3. load parquet file into  a database
+
+
+# Project structure
+
+
 
 # Airflow
 Follow instruction from Airflow docs [https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html]
@@ -9,5 +26,32 @@ Follow instruction from Airflow docs [https://airflow.apache.org/docs/apache-air
 
 Using UV building project [https://docs.astral.sh/uv/guides/projects/#running-commands]
 
+## UV project - install uv
 
-#
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+## Database management
+
+Uses alembic [https://alembic.sqlalchemy.org/en/latest/tutorial.html] 
+
+# How to test
+
+## integration test needs environment variables add exchange api token
+```
+export EXCHANGERATE_API_TOKEN=my-token 
+export COINMARKETCAP_API_TOKEN=api_key_here
+```
+
+## UV build
+```
+uv build
+```
+
+
+# Issues
+
+UV and Airflow have known issues, spcially with the python 3.13 version
+
+Running alembic db management could conflict with and airflow in a local environment
