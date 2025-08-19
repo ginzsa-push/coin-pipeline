@@ -48,9 +48,18 @@ export COINMARKETCAP_API_TOKEN=api_key_here
 ```
 uv build
 ```
+NOTE dist folder will have the wheel artifact (to be deployed to an repository)
+this should be used on the web api and airflow dags
 
 
-# Issues
+## test locally (not working atm - conflict with airflow dbs)
+```
+docker compose up
+```
+
+
+
+## Issues (so far)
 
 UV and Airflow have known issues, spcially with the python 3.13 version
 
