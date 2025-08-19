@@ -44,6 +44,11 @@ uv run alembic upgrade head
 uv run alembic revision -m "create initial table creation"
 ```
 
+After docker-compose up execution this command provably needed (needs to wait for db to finish)
+```
+docker-compose up -d alembic
+```
+
 # How to test
 
 ## integration test needs environment variables add exchange api token
