@@ -8,12 +8,8 @@ RUN apt-get update && apt-get install -y \
 # Install Python dependencies
 RUN pip install --no-cache-dir sqlalchemy psycopg2-binary alembic
 
-
-
-
 # Working directory for Alembic
 WORKDIR /alembic
-
 
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
