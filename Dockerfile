@@ -1,4 +1,6 @@
-FROM apache/airflow:airflow:3.0.4
+FROM apache/airflow:3.0.4
+
+RUN python --version
 
 # Copy your wheel into the image
 COPY dist/coin_pipeline-0.1.0-py3-none-any.whl /wheels/
